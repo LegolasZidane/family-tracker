@@ -8,8 +8,7 @@ const port = process.env.PORT || 3000;
 const {Client} = pg;
 
 const config = parse(process.env.DATABASE_URL);
-config.host = 'postgresql://postgres.wtvaccndtqbebwqklvbw:[password@1234]@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
-
+config.ssl = { rejectUnauthorized: false };
 const db = new Client(config);
 db.connect()
   .then(() => console.log("Connected to Supabase"))
