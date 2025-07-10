@@ -11,9 +11,10 @@ const config = parse(process.env.DATABASE_URL);
 config.ssl = { rejectUnauthorized: false };
 config.host = config.host;
 
-const db = new Client(config).then(() => console.log("Connected to Supabase"))
-.catch(err => console.error("Connection error", err));;
-db.connect();
+const db = new Client(config);
+db.connect()
+  .then(() => console.log("Connected to Supabase"))
+  .catch(err => console.error("Connection error", err));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
