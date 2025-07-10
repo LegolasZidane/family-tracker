@@ -3,8 +3,8 @@ import bodyParser from "body-parser";
 import pg from "pg";
 
 const app = express();
-const port = 3000;
-const {Client} = require('pg');
+const port = process.env.PORT || 3000;
+const {Client} = pg;
 
 const db = new Client({
   connectionString: process.env.DATABASE_URL,
