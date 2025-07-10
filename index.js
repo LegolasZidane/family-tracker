@@ -8,6 +8,7 @@ const {Client} = pg;
 
 const db = new Client({
   connectionString: process.env.DATABASE_URL,
+  host: 'db.YOUR-SUPABASE-HOST.supabase.co', // 👈 force IPv4 by using hostname
   ssl: {
     rejectUnauthorized: false,
   },
