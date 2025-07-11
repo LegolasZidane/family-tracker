@@ -37,25 +37,34 @@ async function checkVisisted() {
 
 app.get("/", async (req, res) => {
   try{
+
     const result = await db.query("SELECT id, name, color FROM users;");
+    
     if( result.length !== 0 ){
+
       users = result.rows;
       const countries = await checkVisisted();
+
       res.render("index.ejs", { 
         countries: countries,
         total: countries.length,
         users: users,
         color: users[currentUserId].color
       });
+
     } else
       res.render("index.ejs");
+
   } catch(err) {
+
     console.log(err);
+  
   }
 });
 
 
 app.post("/add", async (req, res) => {
+  
   const input = req.body["country"];
 
   try {
