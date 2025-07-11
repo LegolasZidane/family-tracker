@@ -22,7 +22,11 @@ let currentUserId = 0;
 let users = [];
 
 async function checkVisisted() {
+  try {
   const result = await db.query("SELECT country_code FROM visited_countries WHERE user_id = $1", [currentUserId]);
+  } catch (err) {
+    console.log(err);
+  }
   let countries = [];
   result.rows.forEach((country) => {
     countries.push(country.country_code);
@@ -35,8 +39,6 @@ app.get("/", async (req, res) => {
   const result = await db.query("SELECT id, name, color FROM users;");
   users = result.rows;
   const countries = await checkVisisted();
-  console.log(users);
-  console.log(countries);
   res.render("index.ejs", { 
     countries: countries,
     total: countries.length,
@@ -54,7 +56,6 @@ app.post("/add", async (req, res) => {
       "SELECT country_code FROM countries WHERE LOWER(country_name) LIKE $1 || '%';",
       [input.toLowerCase()]
     );
-    console.log(result);
     const data = result.rows[0];
     const countryCode = data.country_code;
     try {
