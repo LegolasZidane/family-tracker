@@ -389,14 +389,14 @@
   </section>
   <h2 class="total-count">Total Countries: <%=locals.total ? total : 0%>
   </h2>
+  <% if( typeof countries !== 'undefined' && countries ) { %>
   <script>
-    if( locals.countries ) {
       const country_codes = "<%= countries %>".split(",");
       country_codes.forEach(code => {
         document.getElementById(code).style.fill = "<%= color %>"
       });
-    }
   </script>
+  <% } %> 
 </body>
 
 </html>
