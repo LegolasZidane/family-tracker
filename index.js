@@ -40,7 +40,7 @@ app.get("/", async (req, res) => {
 
     const result = await db.query("SELECT id, name, color FROM users;");
     console.log(result);
-    if( result.length !== 0 ){
+    if( result.rows.length !== 0 ){
 
       users = result.rows;
       const countries = await checkVisisted();
@@ -49,7 +49,7 @@ app.get("/", async (req, res) => {
         countries: countries,
         total: countries.length,
         users: users,
-        color: users.length !== 0 ? users[currentUserId].color : null
+        color: users[currentUserId].color
       });
 
     } else
