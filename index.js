@@ -39,7 +39,7 @@ app.get("/", async (req, res) => {
   try{
 
     const result = await db.query("SELECT id, name, color FROM users;");
-    console.log(result);
+    
     if( result.rows.length !== 0 ){
 
       users = result.rows;
