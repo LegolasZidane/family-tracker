@@ -23,28 +23,35 @@ let users = [];
 
 async function checkVisisted() {
   try {
-  const result = await db.query("SELECT country_code FROM visited_countries WHERE user_id = $1", [currentUserId]);
+    const result = await db.query("SELECT country_code FROM visited_countries WHERE user_id = $1", [currentUserId]);
+    let countries = [];
+    result.rows.forEach((country) => {
+      countries.push(country.country_code);
+    });
+  return countries;
   } catch (err) {
     console.log(err);
   }
-  let countries = [];
-  result.rows.forEach((country) => {
-    countries.push(country.country_code);
-  });
-  return countries;
 }
 
 
 app.get("/", async (req, res) => {
-  const result = await db.query("SELECT id, name, color FROM users;");
-  users = result.rows;
-  const countries = await checkVisisted();
-  res.render("index.ejs", { 
-    countries: countries,
-    total: countries.length,
-    users: users,
-    color: users[currentUserId].color
-  });
+  try{
+    const result = await db.query("SELECT id, name, color FROM users;");
+    if( result.length !== 0 ){
+      users = result.rows;
+      const countries = await checkVisisted();
+      res.render("index.ejs", { 
+        countries: countries,
+        total: countries.length,
+        users: users,
+        color: users[currentUserId].color
+      });
+    } else
+      res.render("index.ejs");
+  } catch(err) {
+    console.log(err);
+  }
 });
 
 
