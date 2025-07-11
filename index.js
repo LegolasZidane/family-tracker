@@ -140,11 +140,14 @@ app.post("/new", async (req, res) => {
   const newUser = {
     id: users.length,
     name: req.body.name,
-    color: req.body.color || 'black'
+    color: req.body.color || 'white'
   };
   
   await db.query("INSERT INTO users (id, name, color) VALUES ($1, $2, $3)", [newUser.id, newUser.name, newUser.color]);
   users.push(newUser);
+
+  currentUserId = newUser.id;
+
   res.redirect("/");
 });
 
