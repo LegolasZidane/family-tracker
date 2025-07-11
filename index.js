@@ -35,6 +35,8 @@ app.get("/", async (req, res) => {
   const result = await db.query("SELECT id, name, color FROM users;");
   users = result.rows;
   const countries = await checkVisisted();
+  console.log(users);
+  console.log(countries);
   res.render("index.ejs", { 
     countries: countries,
     total: countries.length,
@@ -52,7 +54,7 @@ app.post("/add", async (req, res) => {
       "SELECT country_code FROM countries WHERE LOWER(country_name) LIKE $1 || '%';",
       [input.toLowerCase()]
     );
-
+    console.log(result);
     const data = result.rows[0];
     const countryCode = data.country_code;
     try {
@@ -95,8 +97,6 @@ app.post("/user", async (req, res) => {
 });
 
 app.post("/new", async (req, res) => {
-  //Hint: The RETURNING keyword can return the data that was inserted.
-  //https://www.postgresql.org/docs/current/dml-returning.html
   const newUser = {
     id: users.length,
     name: req.body.name,
