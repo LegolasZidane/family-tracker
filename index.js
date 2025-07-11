@@ -79,7 +79,7 @@ app.post("/add", async (req, res) => {
       [input.toLowerCase()]
     );
 
-    if( result.rows.length === 0 )
+    if( users.length === 0 )
       res.render("index.ejs", {error: "First create a user, then add countries to it"});
     else {
       const data = result.rows[0];
