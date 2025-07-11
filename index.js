@@ -39,7 +39,7 @@ app.get("/", async (req, res) => {
   try{
 
     const result = await db.query("SELECT id, name, color FROM users;");
-    
+    console.log(result);
     if( result.length !== 0 ){
 
       users = result.rows;
@@ -49,7 +49,7 @@ app.get("/", async (req, res) => {
         countries: countries,
         total: countries.length,
         users: users,
-        color: users[currentUserId].color
+        color: users.length !== 0 ? users[currentUserId].color : null
       });
 
     } else
@@ -64,7 +64,7 @@ app.get("/", async (req, res) => {
 
 
 app.post("/add", async (req, res) => {
-  
+
   const input = req.body["country"];
 
   try {
